@@ -2,12 +2,14 @@
 
 ## ⚙️ Features
 - Webpack 5
+- Pug
 - Babel
 - PostCSS
 - ESlint
 - Stylelint
 - Prettier
 - devServer
+- Github Actions
 
 ## 🏁 Quick start
 
@@ -37,9 +39,9 @@ npm run build
 yarn run build
 ```
 
-| npm             | yarn             | actions               |
-|-----------------| ---------------- | --------------------- |
-| `npm install`   | `yarn install`   | install               |
-| `npm run start` | `yarn start`     | development           |
-| `npm run build` | `yarn build`     | production            |
-| `npm run fix`   | `yarn fix`       | fix file with linters |
+| npm              | yarn                | actions               |
+|------------------|---------------------|-----------------------|
+| `npm install`    | `yarn`              | install dependencies  |
+| `npm run start`  | `yarn run start`    | development mode      |
+| `npm run build`  | `yarn run build`    | production mode          |
+| `npm run lint:fix` | `yarn run lint:fix` | fix file with linters |
