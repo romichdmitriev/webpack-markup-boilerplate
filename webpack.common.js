@@ -30,7 +30,7 @@ const pugPages = [...glob.sync('./src/pages/**/*.pug')].map(
 module.exports = {
   target: 'web',
   context: path.resolve(__dirname, 'src'),
-  entry: ['./js/index.js', './styles/style.scss'],
+  entry: ['./js/index.js', './styles/main.scss'],
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].[hash:8].js',
