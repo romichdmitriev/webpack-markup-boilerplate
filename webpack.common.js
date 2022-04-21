@@ -1,7 +1,6 @@
 const path = require('path');
 const glob = require('glob');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const FileIncludeWebpackPlugin = require('file-include-webpack-plugin-replace');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
@@ -11,18 +10,18 @@ const CSSExtractor = new MiniCssExtractPlugin({
   chunkFilename: 'styles/[id].css',
 });
 
-const htmlPages = [new FileIncludeWebpackPlugin({
-  source: 'pages',
-  htmlBeautifyOptions: {
-    "indent-with-tabs": false,
-    'indent_size': 4
-  }
-})] || [];
+const htmlPages = [...glob.sync('./src/pages/*.html')].map(
+  (htmlFile) =>
+    new HtmlWebpackPlugin({
+      inject: true,
+      filename: path.basename(htmlFile),
+      template: path.resolve(`${__dirname}/src/pages/`, path.basename(htmlFile)),
+    }),
+);
 
-const pugPages = [...glob.sync('./src/pages/*.pug')].map(
+const pugPages = [...glob.sync('./src/pages/**/*.pug')].map(
   (pugFile) =>
     new HtmlWebpackPlugin({
-      inject: false,
       filename: path.basename(pugFile.replace(/\.pug/, '.html')),
       template: path.resolve(`${__dirname}/src/pages/`, path.basename(pugFile)),
     }),
@@ -62,15 +61,23 @@ module.exports = {
         exclude: /node_modules/,
         use: 'babel-loader',
       },
-      { test: /\.(pug|jade)$/, loader: 'pug-loader' },
+      {
+        test: /\.pug$/,
+        use: {
+          loader: 'pug-loader',
+          options: {
+            pretty: true,
+            self: true,
+          },
+        },
+      },
       {
         test: /\.(css|scss)$/,
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              publicPath: (resourcePath, context) =>
-                `${path.relative(path.dirname(resourcePath), context)}/`,
+              publicPath: (resourcePath, context) => `${path.relative(path.dirname(resourcePath), context)}/`,
             },
           },
           {
