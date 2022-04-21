@@ -1,6 +1,6 @@
 {
   "name": "webpack-htmlcss-boilerplate",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Here you can find boilerplate for developing websites with HTML, CSS and JS without SPA approach.",
   "homepage": "https://github.com/romichdmitriev/webpack-markup-boilerplate#readme",
   "bugs": {
