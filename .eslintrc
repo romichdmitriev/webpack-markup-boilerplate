@@ -1,11 +1,12 @@
 {
-  "extends": ["airbnb/base", "prettier"],
+  "extends": ["airbnb/base", "eslint:recommended", "prettier"],
   "plugins": ["prettier"],
   "parser": "babel-eslint",
   "globals": {
     "fetch": true,
     "window": true,
-    "document": true
+    "document": true,
+    "node": true
   },
   "rules": {
     "prettier/prettier": ["error"],
