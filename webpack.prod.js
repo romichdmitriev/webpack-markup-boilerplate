@@ -1,6 +1,5 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
-const { extendDefaultPlugins } = require("svgo");
+const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 const { merge } = require('webpack-merge');
 const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
@@ -18,10 +17,10 @@ module.exports = merge(common, {
         generator: [
           {
             // You can apply generator using `?as=webp`, you can use any name and provide more options
-            preset: "webp",
+            preset: 'webp',
             implementation: ImageMinimizerPlugin.imageminGenerate,
             options: {
-              plugins: ["imagemin-webp"],
+              plugins: ['imagemin-webp'],
             },
           },
         ],
@@ -31,16 +30,32 @@ module.exports = merge(common, {
             // Lossless optimization with custom option
             // Feel free to experiment with options for better result for you
             plugins: [
-              ["gifsicle", { interlaced: true }],
-              ["jpegtran", { progressive: true }],
-              ["optipng", { optimizationLevel: 5 }],
+              ['gifsicle', { interlaced: true }],
+              ['imagemin-mozjpeg', { progressive: true }],
+              ['optipng', { optimizationLevel: 5 }],
+              [
+                'svgo',
+                {
+                  plugins: [
+                    'preset-default',
+                    {
+                      name: 'removeViewBox',
+                      active: false,
+                    },
+                    {
+                      name: 'addAttributesToSVGElement',
+                      params: {
+                        attributes: [{ xmlns: 'http://www.w3.org/2000/svg' }],
+                      },
+                    },
+                  ],
+                },
+              ],
             ],
           },
         },
       }),
     ],
   },
-  plugins: [
-    new CleanWebpackPlugin()
-  ],
+  plugins: [new CleanWebpackPlugin()],
 });
