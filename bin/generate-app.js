@@ -28,21 +28,6 @@ const currentPath = process.cwd();
 const projectPath = path.join(currentPath, projectName);
 const gitRepo = 'https://github.com/romichdmitriev/webpack-markup-boilerplate.git';
 
-try {
-  fs.mkdirSync(projectPath);
-} catch (err) {
-  if (err.code === 'EEXIST') {
-    console.log(
-      '\x1b[31m',
-      `The file ${projectName} already exist in the current directory, please give it another name.`,
-      '\x1b[0m',
-    );
-  } else {
-    console.log(err);
-  }
-  process.exit(1);
-}
-
 function buildPackageJson(packageJSON, folderName) {
   const { bin, keywords, license, homepage, repository, bugs, ...newPackage } = packageJSON;
 
@@ -145,6 +130,23 @@ async function main() {
   } catch (error) {
     console.log(error);
   }
+}
+
+try {
+  fs.mkdirSync(projectPath);
+} catch (err) {
+  if (err.code === 'EXIST') {
+    console.log(
+      '\x1b[31m',
+      `The file ${projectName} already exist in the current directory, please give it another name.`,
+      '\x1b[0m',
+    );
+  } else if (projectName === '.') {
+    main();
+  } else {
+    console.log(err);
+  }
+  process.exit(1);
 }
 
 main();
